@@ -11,7 +11,7 @@ var initialState = [
     {
         id : 2,
         name : 'Samsung galaxy S7',
-        image : 'https://s7d2.scene7.com/is/image/SamsungUS/SMG930_gs7_102416?$product-details-jpg$',
+        image : 'https://cdn.fptshop.com.vn/Uploads/Originals/2016/2/23/635918156584359185_s7-g1.jpg',
         description : 'Sản phẩm do samsung sản phẩm',
         price : 400,
         inventory : 15,
@@ -20,7 +20,7 @@ var initialState = [
     {
         id : 3,
         name : 'Oppo F1s',
-        image : 'http://drop.ndtv.com/TECH/product_database/images/832016120148PM_635_oppo_f1s.jpeg',
+        image : 'https://dienmaythienhoa.vn/images/thumbnails/51/315/315/OPPO-F1S-64GB-GOLD-2.jpg&w=315&mode=scale',
         description : 'Sản phẩm do china sản phẩm',
         price : 450,
         inventory : 5,

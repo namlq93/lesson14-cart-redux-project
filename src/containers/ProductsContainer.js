@@ -4,28 +4,43 @@ import Products from './../components/Products';
 import Product from './../components/Product';
 import PropTypes from 'prop-types';
 import { actAddToCart, actChangeMessage } from './../actions/index';
+import callApi from './../utils/apiCaller'
 
 class ProductsContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            products: []
+        };
+    }
 
+    componentDidMount() {
+        callApi('products', 'GET', null).then(res => {
+            this.setState({
+                products: res.data
+            });
+        });
+    }
     render() {
-        var { products } = this.props;
+        // var { products } = this.props;
+        var { products } = this.state;
         return (
             <Products>
-                { this.showProducts(products) }
+                {this.showProducts(products)}
             </Products>
         );
     }
 
-    showProducts(products){
+    showProducts(products) {
         var result = null;
         var { onAddToCart, onChangeMessage } = this.props;
-        if(products.length > 0){
+        if (products.length > 0) {
             result = products.map((product, index) => {
-                return <Product 
-                    key={index} 
+                return <Product
+                    key={index}
                     product={product}
-                    onAddToCart = {onAddToCart} 
-                    onChangeMessage = {onChangeMessage}
+                    onAddToCart={onAddToCart}
+                    onChangeMessage={onChangeMessage}
                 />
             });
         }
@@ -35,24 +50,24 @@ class ProductsContainer extends Component {
 }
 
 ProductsContainer.propTypes = {
-    products : PropTypes.arrayOf(
+    products: PropTypes.arrayOf(
         PropTypes.shape({
-            id : PropTypes.number.isRequired,
-            name : PropTypes.string.isRequired,
-            image : PropTypes.string.isRequired,
-            description : PropTypes.string.isRequired,
-            price : PropTypes.number.isRequired,
-            inventory : PropTypes.number.isRequired,
-            rating : PropTypes.number.isRequired
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            image: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired,
+            inventory: PropTypes.number.isRequired,
+            rating: PropTypes.number.isRequired
         })
     ).isRequired,
-    onAddToCart : PropTypes.func.isRequired,
-    onChangeMessage : PropTypes.func.isRequired
+    onAddToCart: PropTypes.func.isRequired,
+    onChangeMessage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
     return {
-        products : state.products
+        products: state.products
     }
 }
 
@@ -61,7 +76,7 @@ const mapDispatchToProps = (dispatch, props) => {
         onAddToCart: (product) => {
             dispatch(actAddToCart(product, 1));
         },
-        onChangeMessage : (message) => {
+        onChangeMessage: (message) => {
             dispatch(actChangeMessage(message));
         }
     }
