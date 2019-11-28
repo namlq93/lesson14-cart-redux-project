@@ -3,27 +3,28 @@ import { connect } from 'react-redux';
 import Products from './../components/Products';
 import Product from './../components/Product';
 import PropTypes from 'prop-types';
-import { actAddToCart, actChangeMessage } from './../actions/index';
-import callApi from './../utils/apiCaller'
+import { actAddToCart, actChangeMessage, actFetchProducts } from './../actions/index';
+import callApi from './../utils/apiCaller';
 
 class ProductsContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: []
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         products: []
+    //     };
+    // }
 
     componentDidMount() {
         callApi('products', 'GET', null).then(res => {
-            this.setState({
-                products: res.data
-            });
+            // this.setState({
+            //     products: res.data
+            // });
+            this.props.fetchAllProducts(res.data);
         });
     }
     render() {
-        // var { products } = this.props;
-        var { products } = this.state;
+        var { products } = this.props;
+        // var { products } = this.state;
         return (
             <Products>
                 {this.showProducts(products)}
@@ -52,7 +53,7 @@ class ProductsContainer extends Component {
 ProductsContainer.propTypes = {
     products: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             image: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
@@ -78,6 +79,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         onChangeMessage: (message) => {
             dispatch(actChangeMessage(message));
+        },
+        fetchAllProducts : (products) => {
+            dispatch(actFetchProducts(products));
         }
     }
 }

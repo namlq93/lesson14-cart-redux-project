@@ -29,3 +29,10 @@ export const actUpdateProductInCart = (product, quantity) => {
         quantity
     }
 }
+
+export const actFetchProducts = (products) => {
+    return {
+        type: Types.FETCH_PRODUCTS,
+        products
+    }
+}
