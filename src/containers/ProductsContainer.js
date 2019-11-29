@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import Products from './../components/Products';
 import Product from './../components/Product';
 import PropTypes from 'prop-types';
-import { actAddToCart, actChangeMessage, actFetchProducts } from './../actions/index';
-import callApi from './../utils/apiCaller';
+import { actAddToCart, actChangeMessage, actFetchProductsRequest } from './../actions/index';
 
 class ProductsContainer extends Component {
     // constructor(props) {
@@ -15,15 +14,18 @@ class ProductsContainer extends Component {
     // }
 
     componentDidMount() {
-        callApi('products', 'GET', null).then(res => {
-            // this.setState({
-            //     products: res.data
-            // });
-            this.props.fetchAllProducts(res.data);
-        });
+        this.props.fetchAllProducts();
+        // callApi('products', 'GET', null).then(res => {
+        //     // this.setState({
+        //     //     products: res.data
+        //     // });
+        //     this.props.fetchAllProducts(res.data);
+        // });
+        console.log("aaa");
     }
     render() {
         var { products } = this.props;
+        console.log(products);
         // var { products } = this.state;
         return (
             <Products>
@@ -80,8 +82,8 @@ const mapDispatchToProps = (dispatch, props) => {
         onChangeMessage: (message) => {
             dispatch(actChangeMessage(message));
         },
-        fetchAllProducts : (products) => {
-            dispatch(actFetchProducts(products));
+        fetchAllProducts : () => {
+            dispatch(actFetchProductsRequest());
         }
     }
 }

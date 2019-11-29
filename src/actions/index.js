@@ -1,4 +1,5 @@
 import * as Types from './../constants/ActionType';
+import callApi from './../utils/apiCaller';
 
 export const actAddToCart = (product, quantity) => {
     return {
@@ -28,6 +29,14 @@ export const actUpdateProductInCart = (product, quantity) => {
         product,
         quantity
     }
+}
+
+export const actFetchProductsRequest = () => {
+    return (dispatch) => {
+        return callApi('products', 'GET', null).then(res => {
+            dispatch(actFetchProducts(res.data));
+        });
+    };
 }
 
 export const actFetchProducts = (products) => {
